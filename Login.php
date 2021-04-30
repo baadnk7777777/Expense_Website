@@ -48,31 +48,29 @@
             <div class="col mt-5 sign">
                 <div class="content">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col">
                             Login
                             <form id="login" method="POST">
 
-                                <div class="form-row" >
-                                    <div class="form-group col">
-                                        <label>Email</label>
-                                        <input type="Email" class="form-control" name="txt_em" placeholder="Email">
-                                    </div>
+
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" placeholder="Email" name="txt_em" required>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col">
                                         <label>Password</label>
-                                        <input type="Password" class="form-control" name="txt_ps"
-                                            placeholder="Password">
+                                        <input type="Password" class="form-control" name="txt_ps" placeholder="Password"
+                                            required>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="form-row">
                                     <div class="col">
                                     <p id="text"></p>
                                     </div>
-                                    
                                 </div>
 
-                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                <button type="submit" class="btn btn-primary w-100">Sign in</button>
                             </form>
                         </div>
                         <div class="col ml-5">
@@ -102,14 +100,13 @@
             data: $("form#login").serialize(),
             success: function(data) {
                 console.log(data);
-                
-                if(data=="ok")
-                {
+
+                if (data == "ok") {
                     window.location.href = 'dashboard.php';
 
-                }
-                else{
-                    $('#text').html("<p class='text-danger' id='text'>Invalid usernmae or password</p>")
+                } else {
+                    $('#text').html(
+                        "<p class='text-danger' id='text'>Invalid usernmae or password</p>")
 
                 }
                 //window.location.href = 'dashboard.php';
