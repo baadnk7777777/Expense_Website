@@ -31,18 +31,37 @@
     <div class="container-fluid pl-0">
         <div class="row">
             <div class="col-2">
-                <div class="side-bar">
+            <div class="side-bar">
                     <p style="font-size: 14.9px;">Expense Website</p>
                     <img src="image/profile.jpg" alt="" width="50%">
                     <hr>
-                    <p style="font-size: 14.9px;">Fullname</p>
-                    <p style="font-size: 14.9px;">Role</p>
-                    <p style="font-size: 11px;">Online</p>
+                    <p style="font-size: 14.9px;"><?php echo $_SESSION['name'] ?></p>
+                    <p style="font-size: 14.9px;"><?php echo $_SESSION['role'] ?></p>
+                    <p style="font-size: 12px;"><i class="fas fa-globe-asia" style="color: green;"></i> Online</p>
                     <hr>
                     <p style="font-size: 14.9px;">General</p>
-                    <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
-                    <br>
-                    <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
+                    <div class="">
+                        <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
+                    </div>
+                    <div class="">
+                        <a href="expenses.php" style="font-size: 14.9px;">Expenses</a>
+                    </div>
+                    <div class="">
+                        <a href="expenses_report.php" style="font-size: 14.9px;">Expenses-Report</a>
+                    </div>
+                    <div class="">
+                        <a href="transaction.php" style="font-size: 14.9px;">Transaction</a>
+                    </div>
+                    <div class="">
+                        <a href="transaction_report.php" style="font-size: 14.9px;">Transaction-Report</a>
+                    </div>
+                    <div class="">
+                        <a href="#" style="font-size: 14.9px;">Setting</a>
+                    </div>
+                    <div class="">
+                        <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
+                    </div>
+
 
                 </div>
             </div>

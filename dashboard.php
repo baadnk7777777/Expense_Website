@@ -34,20 +34,37 @@
     <div class="container-fluid pl-0">
         <div class="row">
             <div class="col-2">
-                <div class="side-bar">
+            <div class="side-bar">
                     <p style="font-size: 14.9px;">Expense Website</p>
                     <img src="image/profile.jpg" alt="" width="50%">
                     <hr>
                     <p style="font-size: 14.9px;"><?php echo $_SESSION['name'] ?></p>
                     <p style="font-size: 14.9px;"><?php echo $_SESSION['role'] ?></p>
-                    <p style="font-size: 12px;"><i class="fas fa-globe-asia"  style="color: green;"></i> Online</p>
+                    <p style="font-size: 12px;"><i class="fas fa-globe-asia" style="color: green;"></i> Online</p>
                     <hr>
                     <p style="font-size: 14.9px;">General</p>
-                    <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
-                    <br>
-                    <a href="expenses.php" style="font-size: 14.9px;">Expenses</a>
-                    <br>
-                    <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
+                    <div class="">
+                        <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
+                    </div>
+                    <div class="">
+                        <a href="expenses.php" style="font-size: 14.9px;">Expenses</a>
+                    </div>
+                    <div class="">
+                        <a href="expenses_report.php" style="font-size: 14.9px;">Expenses-Report</a>
+                    </div>
+                    <div class="">
+                        <a href="transaction.php" style="font-size: 14.9px;">Transaction</a>
+                    </div>
+                    <div class="">
+                        <a href="transaction_report.php" style="font-size: 14.9px;">Transaction-Report</a>
+                    </div>
+                    <div class="">
+                        <a href="#" style="font-size: 14.9px;">Setting</a>
+                    </div>
+                    <div class="">
+                        <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
+                    </div>
+
 
                 </div>
             </div>
@@ -59,7 +76,7 @@
                         <div class="total-Balance p-3 mb-2 bg-primary text-white">
                             <p class="text-center">Total-Balance</p>
                             <?php 
-                                $sql = "Select * FROM children_detail WHERE user_id = :user_id";
+                                $sql = "Select * FROM users WHERE user_id = :user_id";
                                 $query = $db->prepare($sql);
                                 $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                                 $user_id = $_SESSION['user_id'];
@@ -69,7 +86,8 @@
                                         foreach($result as $res)
                                         {   
                             ?>
-                            <p class="text-center"> <?php echo $res->balance ?></p>
+                            <p class="text-center"> <?php echo $res->balance ?> ฿</p>
+                            <p class="text-center"> <?php echo $res->mode ?></p>
 
                         </div>
                     </div>
@@ -77,17 +95,17 @@
                         <div class="total-expense p-3 mb-2 bg-success text-white">
                             <p class="text-center">Total-Expense</p>
                             <?php 
-                                $sql = "Select sum(cost) as total_cost FROM expenses WHERE children_id = :children_id";
+                                $sql = "Select sum(cost) as total_cost FROM expenses WHERE user_id = :user_id";
                                 $query = $db->prepare($sql);
-                                $query->bindParam(':children_id', $children_id, PDO::PARAM_STR);
-                                $children_id = $_SESSION['user_id'];
+                                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                $user_id = $_SESSION['user_id'];
                                 $query->execute();
                                 $result = $query->fetchAll(PDO::FETCH_OBJ);
                                     if($query->rowCount() >0) {
                                         foreach($result as $res1)
                                         {   
                             ?>
-                            <p class="text-center"> <?php echo $res1->total_cost ?></p>
+                            <p class="text-center"> <?php echo $res1->total_cost ?> ฿</p>
                         </div>
                         <?php 
                             }
@@ -95,26 +113,29 @@
                     </div>
                     <div class="col">
                         <div class="yesterday p-3 mb-2 bg-success text-white">
-                            <p class="text-center">Yesterday</p>
+                            <p class="text-center">Current Balance</p>
+                            <?php 
+                                $sql = "Select * FROM users WHERE user_id = :user_id";
+                                $query = $db->prepare($sql);
+                                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                $user_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res2)
+                                        {   
+                            ?>
+                            <p class="text-center"><?php echo $res2->current_balance ?> ฿</p>
                         </div>
+                        <?php 
+                                        }
+                                    }
+
+                        ?>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="last-week-day p-3 mb-2 bg-success text-white">
-                            <p class="text-center">Last 7 Day</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="last-month-day p-3 mb-2 bg-primary text-white">
-                            <p class="text-center">Last 30 Day</p>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="p-3 mb-2 bg-warning text-dark"></div>
-                    </div>
-                </div>
+                
                 <?php 
                     }
                 }

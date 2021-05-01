@@ -32,7 +32,7 @@
             <div class="col-2">
                 <div class="side-bar">
                     <p style="font-size: 14.9px;">Expense Website</p>
-                    <img src="image/profile.jpg" alt="" width="50%">
+                    <img src="image/user.png" alt="" width="50%">
                     <hr>
                     <p style="font-size: 14.9px;">Fullname</p>
                     <p style="font-size: 14.9px;">Role</p>

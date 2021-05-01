@@ -75,56 +75,20 @@
             <div class="col mt-5 content">
                 <div class="row">
                     <div class="col">
-                        <div class="d-flex justify-content-end">
+
+                    <table id="expense-table" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Children_Name</th>
+                                <th>Income</th>
+                                <th>Transaction_Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php 
-                                    $sql3 = "SELECT current_balance
-                                    FROM users
-                                    WHERE user_id = :user_id";
-                                $query3 = $db->prepare($sql3);
-                                $query3->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                $user_id = $_SESSION['user_id'];
-                                $query3->execute();
-                                $result3 = $query3->fetchAll(PDO::FETCH_OBJ);
-                                    if($query3->rowCount() >0) {
-                                        foreach($result3 as $res3)
-                                        {
-                                        if($res3->current_balance >0)
-                                        {
-
-                            ?>
-                            <button class="btn btn-success d-flex justify-content-end d-flex align-items-center"
-                                data-toggle="modal" data-target="#modal-Expenses"><i class="fas fa-plus "></i>Add
-                                Expenses</button>
-                            <?php 
-                                        } else {
-
-                                       
-                            ?>
-                            <button class="btn btn-danger d-flex justify-content-end d-flex align-items-center"
-                               ><i class="fas fa-plus "></i>Add
-                                Expenses</button>
-                            <?php 
-                                 }
-                                }
-                            }
-                            ?>
-
-                        </div>
-
-                        <table id="expense-table" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Cost</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                    $sql2 = "SELECT e.*,c.*
-                                    FROM expenses e CROSS JOIN category c
-                                    WHERE e.category = c.category_id AND e.user_id = :user_id";
+                                    $sql2 = "SELECT t.cost as cost , t.transaction_date as transaction_date , u.username as username 
+                                    FROM transaction t CROSS JOIN users u
+                                    WHERE t.user_id = u.user_id ";
                                 $query2 = $db->prepare($sql2);
                                 $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                                 $user_id = $_SESSION['user_id'];
@@ -135,16 +99,15 @@
                                         foreach($result2 as $res2)
                                         {  
                                             echo "<tr>";
-                                            echo "<td > <p class='text-uppercase'>$res2->category_name </p></td>";
+                                            echo "<td > <p class='text-uppercase'>$res2->username </p></td>";
                                             echo "<td> $res2->cost ฿</td>";
-                                            echo "<td> $res2->expense_description</td>";
-                                            echo "<td> $res2->expense_date</td>";
+                                            echo "<td> $res2->transaction_date</td>";
                                             echo "</tr>";
                                         }
                                     }
                             ?>
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                     </div>
                 </div>
                 <div class="row">
@@ -162,10 +125,6 @@
                                         {  
 
                             ?>
-                    <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">
-                        <marquee scrollamount="5">Remind You Have Current Balance <?php echo $res3->current_balance ?> ฿
-                        </marquee>
-                    </div>
                     <?php 
                       }
                          }

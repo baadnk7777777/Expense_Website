@@ -76,69 +76,43 @@
                 <div class="row">
                     <div class="col">
                         <div class="d-flex justify-content-end">
-                            <?php 
-                                    $sql3 = "SELECT current_balance
-                                    FROM users
-                                    WHERE user_id = :user_id";
-                                $query3 = $db->prepare($sql3);
-                                $query3->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                $user_id = $_SESSION['user_id'];
-                                $query3->execute();
-                                $result3 = $query3->fetchAll(PDO::FETCH_OBJ);
-                                    if($query3->rowCount() >0) {
-                                        foreach($result3 as $res3)
-                                        {
-                                        if($res3->current_balance >0)
-                                        {
-
-                            ?>
                             <button class="btn btn-success d-flex justify-content-end d-flex align-items-center"
-                                data-toggle="modal" data-target="#modal-Expenses"><i class="fas fa-plus "></i>Add
+                                data-toggle="modal" data-target="#modal-Expenses"><i class="fas fa-tools "></i>Manage
                                 Expenses</button>
-                            <?php 
-                                        } else {
-
-                                       
-                            ?>
-                            <button class="btn btn-danger d-flex justify-content-end d-flex align-items-center"
-                               ><i class="fas fa-plus "></i>Add
-                                Expenses</button>
-                            <?php 
-                                 }
-                                }
-                            }
-                            ?>
-
                         </div>
 
                         <table id="expense-table" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Category</th>
-                                    <th>Cost</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
+                                    <th>Username</th>
+                                    <th>Balance</th>
+                                    <th>Mode</th>
+                                    <th>Current_Balance</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                    $sql2 = "SELECT e.*,c.*
-                                    FROM expenses e CROSS JOIN category c
-                                    WHERE e.category = c.category_id AND e.user_id = :user_id";
+                                    $sql2 = "SELECT *
+                                    FROM users
+                                    WHERE role = :children ";
                                 $query2 = $db->prepare($sql2);
-                                $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                $user_id = $_SESSION['user_id'];
-                                //echo $_SESSION['user_id'];
+                                $query2->bindParam(':children', $children, PDO::PARAM_STR);
+                                $children = "children";
                                 $query2->execute();
                                 $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     if($query2->rowCount() >0) {
                                         foreach($result2 as $res2)
                                         {  
                                             echo "<tr>";
-                                            echo "<td > <p class='text-uppercase'>$res2->category_name </p></td>";
-                                            echo "<td> $res2->cost ฿</td>";
-                                            echo "<td> $res2->expense_description</td>";
-                                            echo "<td> $res2->expense_date</td>";
+                                            echo "<td > <p class='text-uppercase'>$res2->username</p></td>";
+                                            echo "<td class='balance'> $res2->balance ฿</td>";
+                                            echo "<td class='scope'> $res2->mode</td>";
+                                            echo "<td class='date'> $res2->current_balance</td>";
+                                            echo "<td>
+                                            <i class='fas fa-money-bill-alt text-success add' style='font-size: 200%' id='$res2->user_id' data-toggle='modal' data-target='#modal-Manage' ></i> 
+                                            <i class='fas fa-money-bill-alt text-primary edit' style='font-size: 200%' id='$res2->user_id' data-toggle='modal' data-target='#modal-Edit'></i> 
+                                            <i class='fas fa-money-bill-alt text-danger' style='font-size: 200%' id='$res2->user_id'></i> </td>";
                                             echo "</tr>";
                                         }
                                     }
@@ -147,65 +121,45 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <?php 
-                                    $sql3 = "SELECT current_balance
-                                    FROM users
-                                    WHERE user_id = :user_id";
-                                $query3 = $db->prepare($sql3);
-                                $query3->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                $user_id = $_SESSION['user_id'];
-                                $query3->execute();
-                                $result3 = $query3->fetchAll(PDO::FETCH_OBJ);
-                                    if($query3->rowCount() >0) {
-                                        foreach($result3 as $res3)
-                                        {  
 
-                            ?>
-                    <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">
-                        <marquee scrollamount="5">Remind You Have Current Balance <?php echo $res3->current_balance ?> ฿
-                        </marquee>
-                    </div>
-                    <?php 
-                      }
-                         }
-                ?>
-                </div>
+                
 
             </div>
         </div>
 
-        <div class="modal fade" id="modal-Expenses" tabindex="-1" role="dialog">
+        <!-- Add-modern             -->
+        <div class="modal fade" id="modal-Manage" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form method="post" id="frmExpenses" enctype="multipart/form-data">
+                    <form method="post" id="manage" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add Expenses</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Manage Expenses</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body" id="modal-body-Expenses">
+
+                        <div class="modal-body" id="modal-body-manage">
                             <div class="form-row">
                                 <div class="form-group  col">
-                                    <input type="text" class="form-control" placeholder="Cost Item" name="txt_cost"
+                                    <input type="text" class="form-control" placeholder="Balance" name="txt_balance"
                                         required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col">
-                                    <select class="custom-select" name="txt_cate" required>
-                                        <option selected>Category ...</option>
+                                    <select class="custom-select" name="txt_scope" required>
+                                        <option selected>Scope ...</option>
                                         <?php 
-                                         $sql = "Select * FROM category ORDER BY category_id ASC";
+                                         $sql = "Select * FROM mode ORDER BY mode_id ASC";
                                          $query = $db->prepare($sql);
                                          $query->execute();
                                          $result = $query->fetchAll(PDO::FETCH_OBJ);
                                              if($query->rowCount() >0) {
                                                  foreach($result as $res)
                                                  {   
-                                                     echo "<option value='$res->category_id'>$res->category_name</option>";
+                                                     echo "<option value='$res->mode_id'>$res->mode_name</option>";
                                                  }
                                                 }
                                     ?>
@@ -221,29 +175,74 @@
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="txt_area"
-                                        rows="3"></textarea>
-
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col">
-                                    <input type="file" id="uploadimage" name="image">
-
-                                </div>
-                            </div>
                         </div>
-                        <div class="modal-footer" id="modal-footer-Expenses">
+                        <div class="modal-footer" id="modal-footer-manage">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success" value="Upload">Add</button>
+                            <button type="submit" class="btn btn-success" value="Upload">Manage</button>
+                            <input type="hidden" class="" id="manage_id" value='' name="manage_id">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Edit-modern             -->
+        <!-- <div class="modal fade" id="modal-Edit" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form method="post" id="Edit" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Manage Expenses</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body" id="modal-body-Edit">
+                            <div class="form-row">
+                                <div class="form-group  col">
+                                    <input type="text" class="form-control " placeholder="Balance" name="txt_balance" id="balance"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <select class="custom-select " name="txt_scope" required id="scope">
+                                        <option selected>Scope ...</option> -->
+        <!-- <?php 
+                                        //  $sql = "Select * FROM mode ORDER BY mode_id ASC";
+                                        //  $query = $db->prepare($sql);
+                                        //  $query->execute();
+                                        //  $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                        //      if($query->rowCount() >0) {
+                                        //          foreach($result as $res)
+                                        //          {   
+                                        //              echo "<option value='$res->mode_id'>$res->mode_name</option>";
+                                        //          }
+                                        //         }
+                                    ?> -->
+        <!-- </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <input type="text" class="form-control date" name="date" Placeholder="Date" id="date" required>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer" id="modal-footer-Edit">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success" value="Upload">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> -->
 
     </div>
 
@@ -269,6 +268,68 @@
     });
     $(document).ready(function() {
         $('#expense-table').DataTable();
+
+        $(function() {
+            $("#manage").submit(function(e) {
+                e.preventDefault();
+                console.log("Hello");
+                event.preventDefault();
+                $.ajax({
+                    url: "command/add_transaction.php",
+                    type: "post",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        console.log(data);
+                        //alert("Expense Success!");
+                        //$('.alert').alert()
+                        $("#modal-body-manage").html(data);
+                        var btnClose =
+                            ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                        $("#modal-footer-manage").html(btnClose);
+                    },
+                    error: function(data) {
+                        console.log("An error accured." + data);
+                    }
+                });
+            });
+        });
+
+
+        $('.edit').click(function(e) {
+            e.preventDefault();
+            console.log("edit");
+
+            $balance = $(this).closest("tr").find('.balance').text();
+            $scope = $(this).closest("tr").find('.scope').text();
+            $date = $(this).closest("tr").find('.date').text();
+
+            $('.balance').text($balance);
+            $('.scope').text($scope);
+            $('.date').text($date);
+
+            // $key = $(this).attr('id');
+            // console.log($key);
+            $('#balance').val($balance);
+            $('#scope').val($scope);
+            $('#date').val($date);
+
+            // $key = $(this).attr('id');
+            // $('#user_id').val($key);
+
+        });
+
+        $('.add').click(function(e) {
+            e.preventDefault();
+            console.log("add");
+
+            $key = $(this).attr('id'); // ปุุ่มกด
+            //console.log($key);
+
+            $('#manage_id').val($key);
+        });
 
 
 
