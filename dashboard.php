@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include_once('command/config.php');
 ?>
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -43,13 +44,81 @@
                     <hr>
                     <p style="font-size: 14.9px;">General</p>
                     <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
+                    <br>
+                    <a href="expenses.php" style="font-size: 14.9px;">Expenses</a>
+                    <br>
+                    <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
 
                 </div>
             </div>
 
 
             <div class="col mt-5 content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati exercitationem eius pariatur a unde at quo debitis error! Ducimus alias cupiditate non et illo, veritatis aliquam tempora nam voluptatum eligendi!
+                <div class="row">
+                    <div class="col">
+                        <div class="total-Balance p-3 mb-2 bg-primary text-white">
+                            <p class="text-center">Total-Balance</p>
+                            <?php 
+                                $sql = "Select * FROM children_detail WHERE user_id = :user_id";
+                                $query = $db->prepare($sql);
+                                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                $user_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res)
+                                        {   
+                            ?>
+                            <p class="text-center"> <?php echo $res->balance ?></p>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="total-expense p-3 mb-2 bg-success text-white">
+                            <p class="text-center">Total-Expense</p>
+                            <?php 
+                                $sql = "Select sum(cost) as total_cost FROM expenses WHERE children_id = :children_id";
+                                $query = $db->prepare($sql);
+                                $query->bindParam(':children_id', $children_id, PDO::PARAM_STR);
+                                $children_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res1)
+                                        {   
+                            ?>
+                            <p class="text-center"> <?php echo $res1->total_cost ?></p>
+                        </div>
+                        <?php 
+                            }
+                        }?>
+                    </div>
+                    <div class="col">
+                        <div class="yesterday p-3 mb-2 bg-success text-white">
+                            <p class="text-center">Yesterday</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="last-week-day p-3 mb-2 bg-success text-white">
+                            <p class="text-center">Last 7 Day</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="last-month-day p-3 mb-2 bg-primary text-white">
+                            <p class="text-center">Last 30 Day</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 mb-2 bg-warning text-dark"></div>
+                    </div>
+                </div>
+                <?php 
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>

@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -37,9 +40,9 @@
                     <p style="font-size: 11px;">Online</p>
                     <hr>
                     <p style="font-size: 14.9px;">General</p>
-                    <a href="Login.php" style="font-size: 14.9px;">Login</a>
+                    <a href="dashboard.php" style="font-size: 14.9px;">DashBoard</a>
                     <br>
-                    <a href="Signup.php" style="font-size: 14.9px;">Signup</a>
+                    <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
 
                 </div>
             </div>
@@ -47,36 +50,7 @@
 
             <div class="col mt-5 sign">
                 <div class="content">
-                    <div class="row">
-                        <div class="col">
-                            Login
-                            <form id="login" method="POST">
-
-
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Email" name="txt_em" required>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col">
-                                        <label>Password</label>
-                                        <input type="Password" class="form-control" name="txt_ps" placeholder="Password"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                    <p id="text"></p>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary w-100">Sign in</button>
-                            </form>
-                        </div>
-                        <div class="col ml-5">
-                            <img src="image/wall1.jpg" alt="">
-                        </div>
-                    </div>
+                    <marquee scrollamount="5"><h1>Welcome Back <?php echo $_SESSION['name'] ?> </h1></marquee>
                 </div>
             </div>
         </div>
@@ -92,31 +66,7 @@
     </script>
 
     <script>
-    $("#login").submit(function() {
-        event.preventDefault();
-        $.ajax({
-            url: "command/login.php",
-            type: "post",
-            data: $("form#login").serialize(),
-            success: function(data) {
-                console.log(data);
-
-                if (data == "ok") {
-                    window.location.href = 'welcome.php';
-
-                } else {
-                    $('#text').html(
-                        "<p class='text-danger' id='text'>Invalid usernmae or password</p>")
-
-                }
-                //window.location.href = 'dashboard.php';
-            },
-            error: function(data) {
-                console.log("An error accured." + data);
-                //location.reload();
-            }
-        });
-    });
+    
     </script>
 
 </body>
