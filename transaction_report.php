@@ -88,7 +88,8 @@
                             <?php 
                                     $sql2 = "SELECT t.cost as cost , t.transaction_date as transaction_date , u.username as username 
                                     FROM transaction t CROSS JOIN users u
-                                    WHERE t.user_id = u.user_id ";
+                                    WHERE t.user_id = u.user_id
+                                    ORDER BY t.transaction_time DESC ";
                                 $query2 = $db->prepare($sql2);
                                 $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                                 $user_id = $_SESSION['user_id'];

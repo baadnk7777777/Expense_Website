@@ -77,7 +77,7 @@
                     <div class="col">
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-success d-flex justify-content-end d-flex align-items-center"
-                                data-toggle="modal" data-target="#modal-Expenses"><i class="fas fa-tools "></i>Manage
+                                data-toggle="modal" data-target="#modal-Manage-children"><i class="fas fa-tools "></i>Manage
                                 Expenses</button>
                         </div>
 
@@ -93,12 +93,12 @@
                             </thead>
                             <tbody>
                                 <?php 
-                                    $sql2 = "SELECT *
-                                    FROM users
-                                    WHERE role = :children ";
+                                    $sql2 = "SELECT u.username as username, u.balance as balance, m.mode_name as mode, u.current_balance as current_balance, u.user_id as user_id
+                                    FROM mode m CROSS JOIN users u
+                                    WHERE m.mode_id = u.mode ";
                                 $query2 = $db->prepare($sql2);
                                 $query2->bindParam(':children', $children, PDO::PARAM_STR);
-                                $children = "children";
+                                $children = "Children";
                                 $query2->execute();
                                 $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
                                     if($query2->rowCount() >0) {
@@ -108,7 +108,7 @@
                                             echo "<td > <p class='text-uppercase'>$res2->username</p></td>";
                                             echo "<td class='balance'> $res2->balance ฿</td>";
                                             echo "<td class='scope'> $res2->mode</td>";
-                                            echo "<td class='date'> $res2->current_balance</td>";
+                                            echo "<td class='current'> $res2->current_balance</td>";
                                             echo "<td>
                                             <i class='fas fa-money-bill-alt text-success add' style='font-size: 200%' id='$res2->user_id' data-toggle='modal' data-target='#modal-Manage' ></i> 
                                             <i class='fas fa-money-bill-alt text-primary edit' style='font-size: 200%' id='$res2->user_id' data-toggle='modal' data-target='#modal-Edit'></i> 
@@ -124,6 +124,88 @@
 
                 
 
+            </div>
+        </div>
+
+        <!-- Manage-modal             -->
+        <div class="modal fade" id="modal-Manage-children" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form method="post" id="manage-children" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Manage Expenses</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body" id="modal-body-manage-children">
+                            <div class="form-row">
+                                <div class="form-group  col">
+                                    <input type="text" class="form-control" placeholder="Balance" name="txt_balance"
+                                        required>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <select class="custom-select" name="txt_scope" required>
+                                        <option selected>Scope ...</option>
+                                        <?php 
+                                         $sql = "Select * FROM mode ORDER BY mode_id ASC";
+                                         $query = $db->prepare($sql);
+                                         $query->execute();
+                                         $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                             if($query->rowCount() >0) {
+                                                 foreach($result as $res)
+                                                 {   
+                                                     echo "<option value='$res->mode_id'>$res->mode_name</option>";
+                                                 }
+                                                }
+                                    ?>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <input type="text" class="form-control" name="date" Placeholder="Date" required>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <select class="custom-select" name="txt_children" required>
+                                        <option selected>Children ...</option>
+                                        <?php 
+                                         $sql = "Select * FROM users WHERE role LIKE 'children' ORDER BY user_id ASC
+                                                     ";
+                                         $query = $db->prepare($sql);
+                                         $query->execute();
+                                         $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                             if($query->rowCount() >0) {
+                                                 foreach($result as $res)
+                                                 {   
+                                                     echo "<option value='$res->user_id'>$res->username</option>";
+                                                 }
+                                                }
+                                    ?>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer" id="modal-footer-manage-children">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-success" value="Upload">Manage</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -187,7 +269,7 @@
         </div>
 
         <!-- Edit-modern             -->
-        <!-- <div class="modal fade" id="modal-Edit" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal-Edit" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form method="post" id="Edit" enctype="multipart/form-data">
@@ -201,35 +283,35 @@
                         <div class="modal-body" id="modal-body-Edit">
                             <div class="form-row">
                                 <div class="form-group  col">
-                                    <input type="text" class="form-control " placeholder="Balance" name="txt_balance" id="balance"
-                                        required>
+                                    <input type="text" class="form-control " placeholder="Balance" name="txt_balance" id="balance" value=""
+                                        >
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col">
-                                    <select class="custom-select " name="txt_scope" required id="scope">
-                                        <option selected>Scope ...</option> -->
-        <!-- <?php 
-                                        //  $sql = "Select * FROM mode ORDER BY mode_id ASC";
-                                        //  $query = $db->prepare($sql);
-                                        //  $query->execute();
-                                        //  $result = $query->fetchAll(PDO::FETCH_OBJ);
-                                        //      if($query->rowCount() >0) {
-                                        //          foreach($result as $res)
-                                        //          {   
-                                        //              echo "<option value='$res->mode_id'>$res->mode_name</option>";
-                                        //          }
-                                        //         }
-                                    ?> -->
-        <!-- </select>
+                                    <select class="custom-select " name="txt_scope"  id="scope" value="">
+                                        <option selected>Scope ...</option>
+        <?php 
+                                         $sql = "Select * FROM mode ORDER BY mode_id ASC";
+                                         $query = $db->prepare($sql);
+                                         $query->execute();
+                                         $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                             if($query->rowCount() >0) {
+                                                 foreach($result as $res)
+                                                 {   
+                                                     echo "<option value='$res->mode_id'>$res->mode_name</option>";
+                                                 }
+                                                }
+                                    ?>
+        </select>
 
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col">
-                                    <input type="text" class="form-control date" name="date" Placeholder="Date" id="date" required>
+                                    <input type="text" class="form-control" name="current" Placeholder="Current_Balance" id="current" value="">
 
                                 </div>
                             </div>
@@ -238,11 +320,12 @@
                         <div class="modal-footer" id="modal-footer-Edit">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-success" value="Upload">Edit</button>
+                            <input type="hidden" class="" id="edit_id" value='' name="edit_id">
                         </div>
                     </form>
                 </div>
             </div>
-        </div> -->
+        </div>
 
     </div>
 
@@ -268,6 +351,34 @@
     });
     $(document).ready(function() {
         $('#expense-table').DataTable();
+
+        $(function() {
+            $("#manage-children").submit(function(e) {
+                e.preventDefault();
+                console.log("Hello");
+                event.preventDefault();
+                $.ajax({
+                    url: "command/manage_transaction.php",
+                    type: "post",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+                        console.log(data);
+                        //alert("Expense Success!");
+                        //$('.alert').alert()
+                        $("#modal-body-manage-children").html(data);
+                        var btnClose =
+                            ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
+                        $("#modal-footer-manage-children").html(btnClose);
+                    },
+                    error: function(data) {
+                        console.log("An error accured." + data);
+                    }
+                });
+            });
+        });
 
         $(function() {
             $("#manage").submit(function(e) {
@@ -297,30 +408,6 @@
             });
         });
 
-
-        $('.edit').click(function(e) {
-            e.preventDefault();
-            console.log("edit");
-
-            $balance = $(this).closest("tr").find('.balance').text();
-            $scope = $(this).closest("tr").find('.scope').text();
-            $date = $(this).closest("tr").find('.date').text();
-
-            $('.balance').text($balance);
-            $('.scope').text($scope);
-            $('.date').text($date);
-
-            // $key = $(this).attr('id');
-            // console.log($key);
-            $('#balance').val($balance);
-            $('#scope').val($scope);
-            $('#date').val($date);
-
-            // $key = $(this).attr('id');
-            // $('#user_id').val($key);
-
-        });
-
         $('.add').click(function(e) {
             e.preventDefault();
             console.log("add");
@@ -331,15 +418,34 @@
             $('#manage_id').val($key);
         });
 
+        $('.edit').click(function(e) {
+            e.preventDefault();
+            console.log("edit");
 
+            $balance = $(this).closest("tr").find('.balance').text();
+            $scope = $(this).closest("tr").find('.scope').text();
+            $current = $(this).closest("tr").find('.current').text();
+
+            $('#balance').val($balance);
+            $('#scope').val($scope);
+            $('#current').val($current);
+            console.log($balance);
+            console.log($scope);
+            console.log($current);
+
+            $key = $(this).attr('id'); // ปุุ่มกด
+            console.log($key);
+
+            $('#edit_id').val($key);
+        });
 
         $(function() {
-            $("#frmExpenses").submit(function(e) {
+            $("#Edit").submit(function(e) {
                 e.preventDefault();
-                console.log("Hello");
+                console.log("Edit");
                 event.preventDefault();
                 $.ajax({
-                    url: "command/insert_expense.php",
+                    url: "command/edit_expense.php",
                     type: "post",
                     data: new FormData(this),
                     contentType: false,
@@ -349,15 +455,22 @@
                         console.log(data);
                         //alert("Expense Success!");
                         //$('.alert').alert()
-                        $("#modal-body-Expenses").html(data);
+                        $("#modal-body-Edit").html(data);
                         var btnClose =
                             ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-                        $("#modal-footer-Expenses").html(btnClose);
+                        $("#modal-footer-Edit").html(btnClose);
                     },
                     error: function(data) {
                         console.log("An error accured." + data);
                     }
                 });
+            });
+        });
+
+        $(function() {
+            $("#modal-Edit, #modal-Manage").on("hidden.bs.modal",
+        function() {
+                location.reload();
             });
         });
 

@@ -124,7 +124,8 @@
                                 <?php 
                                     $sql2 = "SELECT e.*,c.*
                                     FROM expenses e CROSS JOIN category c
-                                    WHERE e.category = c.category_id AND e.user_id = :user_id";
+                                    WHERE e.category = c.category_id AND e.user_id = :user_id
+                                    ORDER BY e.expenses_time DESC";
                                 $query2 = $db->prepare($sql2);
                                 $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                                 $user_id = $_SESSION['user_id'];
@@ -297,6 +298,13 @@
                         console.log("An error accured." + data);
                     }
                 });
+            });
+        });
+
+        $(function() {
+            $("#modal-Expenses").on("hidden.bs.modal",
+        function() {
+                location.reload();
             });
         });
 

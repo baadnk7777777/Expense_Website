@@ -18,9 +18,9 @@
         $cost = $_POST['txt_balance'];
         $transaction_date = $_POST['date'];
 
-        var_dump($user_id);
-        var_dump($cost);
-        var_dump($transaction_date);
+        // var_dump($user_id);
+        // var_dump($cost);
+        // var_dump($transaction_date);
 
         $result = $query->execute();             
                     
@@ -38,9 +38,9 @@
         $user_id = $_POST['manage_id'];
         $income = $_POST['txt_balance'];
         $mode = $_POST['txt_scope'];
-        var_dump($user_id);
-        var_dump($income);
-        var_dump($mode);
+        // var_dump($user_id);
+        // var_dump($income);
+        // var_dump($mode);
                     
         $result2 = $query2->execute();
 
@@ -57,14 +57,14 @@
         $user_id = $_POST['manage_id'];
         $income = $_POST['txt_balance'];
 
-        var_dump($user_id);
-        var_dump($income);
+        // var_dump($user_id);
+        // var_dump($income);
             
         $result3 = $query3->execute();
         
         if($sql && $sql2 && $sql3)
         {
-            $output.="Signup Success!!";
+            $output.="Expenses Success!!";
         }
         
     } else {

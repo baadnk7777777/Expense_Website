@@ -22,11 +22,11 @@
         $expense_date = $_POST['date'];
         $expense_description = $_POST['txt_area'];
 
-        var_dump($user_id);
-        var_dump($cost);
-        var_dump($category);
-        var_dump($expense_date);
-        var_dump($expense_description);
+        // var_dump($user_id);
+        // var_dump($cost);
+        // var_dump($category);
+        // var_dump($expense_date);
+        // var_dump($expense_description);
 
         $result = $query->execute();
 
@@ -55,14 +55,14 @@
         $user_id = $_SESSION['user_id'];
         $cost = $res3->total_cost;
 
-        var_dump($user_id);
-        var_dump($cost);
+        // var_dump($user_id);
+        // var_dump($cost);
 
         $result2 = $query2->execute();
         
         if($sql && $sql2)
         {
-            $output.="Signup Success!!";
+            $output.="Add Expenses Success!!";
         }
         
     } else {
