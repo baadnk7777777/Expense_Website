@@ -34,7 +34,7 @@
     <div class="container-fluid pl-0">
         <div class="row">
             <div class="col-2">
-            <div class="side-bar">
+                <div class="side-bar">
                     <p style="font-size: 14.9px;">Expense Website</p>
                     <img src="image/profile.jpg" alt="" width="50%">
                     <hr>
@@ -59,7 +59,7 @@
                         <a href="transaction_report.php" style="font-size: 14.9px;">Transaction-Report</a>
                     </div>
                     <div class="">
-                        <a href="#" style="font-size: 14.9px;">Setting</a>
+                        <a href="setting.php" style="font-size: 14.9px;">Setting</a>
                     </div>
                     <div class="">
                         <a href="Logout.php" style="font-size: 14.9px;">Logout</a>
@@ -76,7 +76,9 @@
                         <div class="total-Balance p-3 mb-2 bg-primary text-white">
                             <p class="text-center">Total-Balance</p>
                             <?php 
-                                $sql = "Select * FROM users WHERE user_id = :user_id";
+                                $sql = "Select u.balance as balance, m.mode_name as mode 
+                                FROM users u CROSS JOIN mode m
+                                 WHERE u.user_id = :user_id AND u.mode = m.mode_id";
                                 $query = $db->prepare($sql);
                                 $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
                                 $user_id = $_SESSION['user_id'];
@@ -133,9 +135,59 @@
 
                         ?>
                     </div>
+
+
                 </div>
 
-                
+                <div class="row">
+                    <div class="col">
+                        <div class="yesterday p-3 mb-2 bg-success text-white">
+                            <p class="text-center">Receiving Date</p>
+                            <?php 
+                                $sql = "Select * FROM users WHERE user_id = :user_id";
+                                $query = $db->prepare($sql);
+                                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                $user_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res2)
+                                        {   
+                            ?>
+                            <p class="text-center"><?php echo $res2->Receiving_date ?> </p>
+                        </div>
+                        <?php 
+                                        }
+                                    }
+
+                        ?>
+                    </div>
+
+                    <div class="col">
+                        <div class="yesterday p-3 mb-2 bg-success text-white">
+                            <p class="text-center">Expiration Date</p>
+                            <?php 
+                                $sql = "Select * FROM users WHERE user_id = :user_id";
+                                $query = $db->prepare($sql);
+                                $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                $user_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res2)
+                                        {   
+                            ?>
+                            <p class="text-center"><?php echo $res2->Expiration_date ?> </p>
+                        </div>
+                        <?php 
+                                        }
+                                    }
+
+                        ?>
+                    </div>
+                </div>
+
+
                 <?php 
                     }
                 }

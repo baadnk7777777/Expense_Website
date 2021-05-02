@@ -4,7 +4,7 @@
     session_start();
     $output ="";
     //var_dump($_POST['manage_id']);
-    if(!empty($_POST['txt_balance']) && !empty($_POST['txt_scope']) && !empty($_POST['date']))
+    if(!empty($_POST['txt_balance'])&& !empty($_POST['date']))
     {
         //$output.= "Have item";
         $sql = "INSERT INTO transaction(user_id,cost ,transaction_date) 
@@ -25,7 +25,7 @@
         $result = $query->execute();             
                     
         $sql2 = "UPDATE users
-                SET balance =  balance + :income , mode = :mode
+                SET balance =  balance + :income 
                
                 WHERE user_id = :user_id";
 
@@ -33,11 +33,11 @@
         $query2->bindParam(':income', $income, PDO::PARAM_STR);
                
         $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-        $query2->bindParam(':mode', $mode, PDO::PARAM_STR);
+       
 
         $user_id = $_POST['manage_id'];
         $income = $_POST['txt_balance'];
-        $mode = $_POST['txt_scope'];
+
         // var_dump($user_id);
         // var_dump($income);
         // var_dump($mode);
