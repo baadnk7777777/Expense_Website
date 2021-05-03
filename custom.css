@@ -42,3 +42,33 @@
     background-color: white;
     height: 200px;
 }
+
+.total-box-top
+{
+    
+    box-shadow: 5px 5px #8888884b;
+    border-radius: 5px;
+}
+
+.total-box
+{
+    
+    box-shadow: 5px 5px #8888884b;
+    border-radius: 5px;
+}
+
+@media only screen and (min-width : 1000px)
+{
+    .hamburger {
+        display: none;
+    }
+}
+
+@media only screen and  (max-width : 1000px) {
+    .hamburger {
+        display: inline;
+    }
+    .nonburger{
+        display: none;
+    }
+}
