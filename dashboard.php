@@ -41,7 +41,7 @@
                         <br>
                         <ul class="navbar-nav mr-auto ">
                             <li class="nav-item mt-1 ">
-                                <a class="text-decoration-none" href="dashboard.php"
+                                <a class="text-decoration" href="dashboard.php"
                                     style="color: #181A1B;">DashBoard</a>
                             </li>
                             <li class="nav-item mt-1">
@@ -128,35 +128,38 @@
 
 
                 <?php 
-                                    $sql3 = "SELECT*
-                                    FROM users
-                                    WHERE user_id = :user_id";
-                                $query3 = $db->prepare($sql3);
-                                $query3->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                $user_id = $_SESSION['user_id'];
-                                $query3->execute();
-                                $result3 = $query3->fetchAll(PDO::FETCH_OBJ);
-                                    if($query3->rowCount() >0) {
-                                        foreach($result3 as $res3)
+                                   $sql = "Select u.balance as balance, m.mode_name as mode , u.current_balance as current, u.Expiration_date as expiration , sum(e.cost) as cost, count(e.cost) as count
+                                   FROM users u CROSS JOIN mode m CROSS JOIN expenses e
+                                    WHERE u.user_id = :user_id AND u.mode = m.mode_id AND e.user_id = :user_id";
+                                   $query = $db->prepare($sql);
+                                   $query->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                   $user_id = $_SESSION['user_id'];
+                                $query->execute();
+                                $result = $query->fetchAll(PDO::FETCH_OBJ);
+                                    if($query->rowCount() >0) {
+                                        foreach($result as $res)
                                         {  
 
                             ?>
                 <div class="row mt-5 ">
                     <div class="col ">
-                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top">Total
-                            Balance</div>
-                        <div class="bg-white d-flex justify-content-center total-box" style="height: 100px;">
-                            <?php echo $res3->balance; ?></div>
+                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top " style="height: 30px;"><i class="fas fa-hand-holding-usd mr-3" style="font-size: 150%"></i>
+                           <h5>Total Balance</h5></div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;">
+                            <h3><?php echo $res->balance." ฿<br>".$res->mode?></h3>
+                            <br>
+                            <!-- <h3><?php echo $res->mode; ?></h3> -->
+                        </div>
                     </div>
                     <div class="col ">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top">Total
-                            Expenses</div>
-                        <div class="bg-white d-flex justify-content-center total-box" style="height: 100px;">text</div>
+                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top " style="height: 30px;"><i class="fas fa-shopping-cart mr-3" style="font-size: 150%"></i><h5>Total
+                            Expenses</h5></div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->cost." ฿" ?></h3></div> 
                     </div>
                     <div class="col">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top">Current
-                            Balance</div>
-                        <div class="bg-white d-flex justify-content-center total-box" style="height: 100px;">text</div>
+                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top" style="height: 30px;"><i class="fas fa-coins mr-3" style="font-size: 150% ; color: gold"></i><h5>Current
+                            Balance</h5></div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"> <h3><?php echo $res->current." ฿" ?></h3></div>
                     </div>
                 </div>
 
@@ -167,14 +170,14 @@
 
                 <div class="row mt-5 ">
                     <div class="col ">
-                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top">Order
-                            Expenses</div>
-                        <div class="bg-white d-flex justify-content-center total-box" style="height: 100px;">text</div>
+                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top" style="height: 30px;"><i class="fas fa-store mr-3" style="font-size: 150%"></i><h5>Order
+                            Expenses</h5></div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->count; ?></h3></div>
                     </div>
                     <div class="col ">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top">Expiration
-                            Date</div>
-                        <div class="bg-white d-flex justify-content-center total-box" style="height: 100px;">text</div>
+                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top "style="height: 30px;" ><i class="fas fa-calendar-week mr-3 " style="font-size: 150%"></i><h5>Expiration
+                            Date</h5></div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->expiration?></h3></div>
                     </div>
                 </div>
 
