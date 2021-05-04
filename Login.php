@@ -1,54 +1,41 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<!DOCTYPE html>
+<?php 
+    session_start();
+    include_once('command/config.php');
+?>
+<!doctype html>
 <html lang="en">
 
 <head>
+    <title>DashBoard</title>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Expense Website</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="custom.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
-
+    <script src="https://kit.fontawesome.com/2b7bd13048.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container-fluid pl-0">
-        <div class="row">
-            <div class="col-2">
-                <div class="side-bar">
-                    <p style="font-size: 14.9px;">Expense Website</p>
-                    <img src="image/profile.jpg" alt="" width="50%">
-                    <hr>
-                    <p style="font-size: 14.9px;">Fullname</p>
-                    <p style="font-size: 14.9px;">Role</p>
-                    <p style="font-size: 11px;">Online</p>
-                    <hr>
-                    <p style="font-size: 14.9px;">General</p>
-                    <a href="Login.php" style="font-size: 14.9px;">Login</a>
-                    <br>
-                    <a href="Signup.php" style="font-size: 14.9px;">Signup</a>
+    <div class="container-fluid">
+        <nav class="navbar navbar-light light-blue lighten-4" id="nav-bee">
 
-                </div>
-            </div>
+            <a class="navbar-brand" href="#">
+                <h3>Expenses Manager</h3>
+            </a>
+
+        </nav>
 
 
-            <div class="col mt-5 sign">
-                <div class="content">
-                    <div class="row">
-                        <div class="col">
+        <div class="row" id="background">
+            <div class="col">
+                <div class="col mt-5 sign bg-white" style="height: auto">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col mt-5">
                             Login
                             <form id="login" method="POST">
 
@@ -72,17 +59,25 @@
 
                                 <button type="submit" class="btn btn-primary w-100">Sign in</button>
                             </form>
-                        </div>
-                        <div class="col ml-5">
-                            <img src="image/wall1.jpg" alt="">
+                            </div>
+                            <div class="col ml-5 mt-5">
+                                <img src="image/wall1.jpg" alt="" width="100%">
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="alert alert-warning" role="alert">
+                   If You Dont'have account  Click Here <a href="Signup.php" class="alert-link">Signup</a> .
+                </div>
+
             </div>
+
         </div>
+
     </div>
-
-
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
@@ -118,7 +113,6 @@
         });
     });
     </script>
-
 </body>
 
 </html>

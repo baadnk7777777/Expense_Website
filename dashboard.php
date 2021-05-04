@@ -21,7 +21,81 @@
 
 <body>
     <div class="container-fluid">
+        <nav class="navbar navbar-light light-blue lighten-4" id="nav-be">
+
+            <a class="navbar-brand" href="#">
+                <h3>Expenses Manager</h3>
+            </a>
+
+            <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="dark-blue-text"><i
+                        class="fas fa-bars fa-1x"></i></span></button>
+
+            <?php 
+                   if($_SESSION['role'] == "parent")
+                    {
+                ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="welcome.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">DashBoard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="expenses.php">Expenses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="expenses_report.php">Expenses Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transaction.php">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transaction_report.php">Transactions Report</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="setting.php">Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <?php 
+                    }else {
+
+            ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="welcome.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">DashBoard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="expenses.php">Expenses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="transaction.php">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <?php }?>
+
+        </nav>
+
+
         <div class="row" id="background">
+
             <div class="col-2" id="sidebar-menu">
                 <div class="d-flex justify-content-center mt-5">
                     <h3>Expense manager</h3>
@@ -30,48 +104,10 @@
                     <p>General</p>
                 </div>
                 <hr>
-                <div class="hamburger d-flex justify-content-center">
-                    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1"
-                        aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
-                                class="fas fa-bars fa-1x"></i></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-
-                        <!-- Links -->
-                        <br>
-                        <ul class="navbar-nav mr-auto ">
-                            <li class="nav-item mt-1 ">
-                                <a class="text-decoration" href="dashboard.php"
-                                    style="color: #181A1B;">DashBoard</a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="text-decoration-none" href="expenses.php" style="color: #181A1B;">Expenses</a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="text-decoration-none" href="expenses_report.php"
-                                    style="color: #181A1B;">Expenses Report</a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="text-decoration-none" href="transaction.php"
-                                    style="color: #181A1B;">Transactions</a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="text-decoration-none" href="transaction_report.php"
-                                    style="color: #181A1B;">Transactions Report</a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="text-decoration-none" href="setting.php" style="color: #181A1B;">Setting</a>
-                            </li>
-                            <li class="nav-item active mt-1">
-                                <a class="text-decoration-none" href="Logout.php" style="color: #181A1B;">Logout</a>
-                            </li>
-                        </ul>
-                        <!-- Links -->
-
-                    </div>
-
-
-                </div>
+                <?php 
+                   if($_SESSION['role'] == "parent")
+                    {
+                ?>
                 <div class="nonburger">
                     <div class="d-flex justify-content-start mt-2 d-flex align-items-center" id="sidebar"><i
                             class="fas fa-chart-line mr-4"></i> <a href="dashboard.php"
@@ -97,6 +133,21 @@
                             class="fas fa-sign-out-alt mr-4"></i><a href="Logout.php"
                             style="color: #181A1B;">Logout</a><i class="fas fa-chevron-right ml-auto"></i></div>
                 </div>
+                <?php 
+                }else{
+                    ?>
+                <div class="nonburger">
+                    <div class="d-flex justify-content-start mt-2 d-flex align-items-center" id="sidebar"><i
+                            class="fas fa-chart-line mr-4"></i> <a href="dashboard.php"
+                            style="color: #181A1B;">DashBoard</a><i class="fas fa-chevron-right ml-auto"></i></div>
+                    <div class="d-flex justify-content-start mt-2 d-flex align-items-center " id="sidebar"><i
+                            class="fab fa-bitcoin mr-4"></i><a href="expenses.php"
+                            style="color: #181A1B;">Expenses</a><i class="fas fa-chevron-right ml-auto"></i></div>
+                    <div class="d-flex justify-content-start mt-2 d-flex align-items-center" id="sidebar"><i
+                            class="fas fa-sign-out-alt mr-4"></i><a href="Logout.php"
+                            style="color: #181A1B;">Logout</a><i class="fas fa-chevron-right ml-auto"></i></div>
+                </div>
+                <?php }?>
             </div>
             <div class="col">
 
@@ -143,8 +194,10 @@
                             ?>
                 <div class="row mt-5 ">
                     <div class="col ">
-                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top " style="height: 30px;"><i class="fas fa-hand-holding-usd mr-3" style="font-size: 150%"></i>
-                           <h5>Total Balance</h5></div>
+                        <div class="bar bg-success  text-white d-flex justify-content-center total-box-top "
+                            style="height: 30px;"><i class="fas fa-hand-holding-usd mr-3" style="font-size: 150%"></i>
+                            <h5>Total Balance</h5>
+                        </div>
                         <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;">
                             <h3><?php echo $res->balance." ฿<br>".$res->mode?></h3>
                             <br>
@@ -152,14 +205,25 @@
                         </div>
                     </div>
                     <div class="col ">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top " style="height: 30px;"><i class="fas fa-shopping-cart mr-3" style="font-size: 150%"></i><h5>Total
-                            Expenses</h5></div>
-                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->cost." ฿" ?></h3></div> 
+                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top "
+                            style="height: 30px;"><i class="fas fa-shopping-cart mr-3" style="font-size: 150%"></i>
+                            <h5>Total
+                                Expenses</h5>
+                        </div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;">
+                            <h3><?php echo $res->cost." ฿" ?></h3>
+                        </div>
                     </div>
                     <div class="col">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top" style="height: 30px;"><i class="fas fa-coins mr-3" style="font-size: 150% ; color: gold"></i><h5>Current
-                            Balance</h5></div>
-                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"> <h3><?php echo $res->current." ฿" ?></h3></div>
+                        <div class="bar bg-warning text-white d-flex justify-content-center total-box-top"
+                            style="height: 30px;"><i class="fas fa-coins mr-3"
+                                style="font-size: 150% ; color: gold"></i>
+                            <h5>Current
+                                Balance</h5>
+                        </div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3 " style="height: 100px;">
+                            <h3><?php echo $res->current." ฿" ?></h3>
+                        </div>
                     </div>
                 </div>
 
@@ -170,14 +234,24 @@
 
                 <div class="row mt-5 ">
                     <div class="col ">
-                        <div class="bar bg-primary  text-white d-flex justify-content-center total-box-top" style="height: 30px;"><i class="fas fa-store mr-3" style="font-size: 150%"></i><h5>Order
-                            Expenses</h5></div>
-                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->count; ?></h3></div>
+                        <div class="bar bg-info  text-white d-flex justify-content-center total-box-top"
+                            style="height: 30px;"><i class="fas fa-store mr-3" style="font-size: 150%"></i>
+                            <h5>Order
+                                Expenses</h5>
+                        </div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;">
+                            <h3><?php echo $res->count; ?></h3>
+                        </div>
                     </div>
                     <div class="col ">
-                        <div class="bar bg-primary text-white d-flex justify-content-center total-box-top "style="height: 30px;" ><i class="fas fa-calendar-week mr-3 " style="font-size: 150%"></i><h5>Expiration
-                            Date</h5></div>
-                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;"><h3><?php echo $res->expiration?></h3></div>
+                        <div class="bar bg-danger text-white d-flex justify-content-center total-box-top "
+                            style="height: 30px;"><i class="fas fa-calendar-week mr-3 " style="font-size: 150%"></i>
+                            <h5>Expiration
+                                Date</h5>
+                        </div>
+                        <div class="bg-white d-flex justify-content-center total-box pt-3" style="height: 100px;">
+                            <h3><?php echo $res->expiration?></h3>
+                        </div>
                     </div>
                 </div>
 
@@ -195,6 +269,12 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        console.log("ready!");
+    });
     </script>
 </body>
 
