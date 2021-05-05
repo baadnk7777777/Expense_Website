@@ -166,7 +166,7 @@
                             </li>
 
                             <li class="nav-item ml-3 mt-4">
-                                <i class="fas fa-cog" style="font-size: 20px"></i>
+                            <a href="profile.php"><i class="fas fa-cog" style="font-size: 20px"></i></a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -413,7 +413,7 @@
 
                         <div class="form-row">
                             <div class="form-group col">
-                                <select class="custom-select " name="txt_scope" id="scope" value="">
+                                <select class="custom-select " name="txt_scope" id="scope" value="" required>
                                     <option selected>Scope ...</option>
                                     <?php 
                                          $sql = "Select * FROM mode ORDER BY mode_id ASC";

@@ -166,7 +166,8 @@
                             </li>
 
                             <li class="nav-item ml-3 mt-4">
-                                <i class="fas fa-cog" style="font-size: 20px"></i>
+                                <a href="profile.php"><i class="fas fa-cog" style="font-size: 20px"></i></a>
+                                
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">

@@ -166,7 +166,7 @@
                             </li>
 
                             <li class="nav-item ml-3 mt-4">
-                            <a href="profile.php"><i class="fas fa-cog" style="font-size: 20px"></i></a>
+                                <i class="fas fa-cog" style="font-size: 20px"></i>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -177,60 +177,82 @@
                 </nav>
 
                 <div class="row">
-                    <div class="col mt-5 d-flex justify-content-center">
-                        <div class="row bg-white " id="content">
-                            <div class="col mt-5">
+                <div class="col mt-5 d-flex justify-content-center">
+                        <div class="row bg-white " id="content" style="height: auto;">
+                            <div class="col mt-5 mb-5">
+                                <div class=" d-flex justify-content-center">
+                                <img src="image/profile.jpg" alt="profile" width="20%" height="25%">
+                                </div>
+                                
+                                <div class="d-flex justify-content-center mt-3">
+                                <h4 class="bg-primary p-1 shadow-sm  rounded"> <?php echo $_SESSION['name'] ?> </h4>
+                                </div>
+                                <div class="d-flex justify-content-center ">
+                                <h6 class="bg-danger p-1  shadow-sm rounded"> <?php echo $_SESSION['role'] ?> </h6>
+                                </div>
+                            </div>
+                            <div class="col mt-5 mb-5">
+                                <?php 
+                                      $sql2 = "SELECT* FROM users 
+                                                WHERE user_id = :user_id ";
+                                  $query2 = $db->prepare($sql2);
+                                  $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+                                  $user_id = $_SESSION['user_id'];
+                                  $query2->execute();
+                                  $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
+                                      if($query2->rowCount() >0) {
+                                          foreach($result2 as $res2)
+                                          {  
+                                ?>
+                                <form>
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                 <label for="">Fullname</label>
+                                 <input type="text" class="form-control" name="txt_fullname" placeholder="Fullname" value="<?php echo$res2->fullname?>">
+                                </div>
+                                </div>
 
-                                <table id="expense-table" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Username</th>
-                                            <th>Category</th>
-                                            <th>Cost</th>
-                                            <th>Description</th>
-                                            <th>Expense_date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                    $sql2 = "SELECT u.username as username , c.category_name as category , e.cost as cost , e.expense_description as descrip, e.expense_date as date
-                                    FROM expenses e INNER JOIN category c INNER JOIN users u
-                                    WHERE e.category = c.category_id AND e.user_id = u.user_id ";
-                                $query2 = $db->prepare($sql2);
-                                // $query2->bindParam(':user_id', $user_id, PDO::PARAM_STR);
-                                // $user_id = $_SESSION['user_id'];
-                                //echo $_SESSION['user_id'];
-                                $query2->execute();
-                                $result2 = $query2->fetchAll(PDO::FETCH_OBJ);
-                                    if($query2->rowCount() >0) {
-                                        foreach($result2 as $res2)
-                                        {  
-                                            echo "<tr>";
-                                            echo "<td > <p class='text-uppercase'>$res2->username </p></td>";
-                                            echo "<td> $res2->category</td>";
-                                            echo "<td> $res2->cost ฿</td>";
-                                            echo "<td> $res2->descrip</td>";
-                                            echo "<td> $res2->date</td>";
-                                            echo "</tr>";
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                 <label for="">Lastname</label>
+                                 <input type="text" class="form-control" name="txt_lastname" placeholder="Lastname" value="<?php echo$res2->lastname?>">
+                                </div>
+                                </div>
+
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                 <label for="">Usernmae</label>
+                                 <input type="text" class="form-control" name="txt_usernmae" placeholder="Username" value="<?php echo$res2->username?>">
+                                </div>
+                                </div>
+
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                 <label for="">password</label>
+                                 <input type="password" class="form-control" name="txt_password" placeholder="Password" value="">
+                                </div>
+                                </div>
+
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                 <label for="">Email</label>
+                                 <input type="email" class="form-control" id="inputEmail4" placeholder="Email" value="<?php echo$res2->email?>">
+                                </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                                <?php 
+                                          }
                                         }
-                                    }
-                            ?>
-                                    </tbody>
-                                </table>
+                                ?>
+                                
                             </div>
 
 
                         </div>
-
-
-                    </div>
-
-
-
-
                 </div>
 
-
+               
 
             </div>
 
@@ -247,63 +269,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function(e) {
-        $('[name="date"]')
-            .datepicker({
-                format: 'yyyy/mm/dd'
-            })
-            .on('changeDate', function(e) {
-                // do somwthing here
-            });
-    });
     $(document).ready(function() {
-        $('#expense-table').DataTable();
-
-
-
-        $(function() {
-            $("#frmExpenses").submit(function(e) {
-                e.preventDefault();
-                console.log("Hello");
-                event.preventDefault();
-                $.ajax({
-                    url: "command/insert_expense.php",
-                    type: "post",
-                    data: new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(data) {
-                        console.log(data);
-                        //alert("Expense Success!");
-                        //$('.alert').alert()
-                        $("#modal-body-Expenses").html(data);
-                        var btnClose =
-                            ' <button type="submit" class="btn btn-danger" data-dismiss="modal">Close</button>'
-                        $("#modal-footer-Expenses").html(btnClose);
-                    },
-                    error: function(data) {
-                        console.log("An error accured." + data);
-                    }
-                });
-            });
-        });
-
-        $(function() {
-            $("#modal-Expenses").on("hidden.bs.modal",
-                function() {
-                    location.reload();
-                });
-        });
-
-
+        console.log("ready!");
     });
     </script>
 </body>

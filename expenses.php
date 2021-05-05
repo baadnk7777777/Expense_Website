@@ -166,7 +166,7 @@
                             </li>
 
                             <li class="nav-item ml-3 mt-4">
-                                <i class="fas fa-cog" style="font-size: 20px"></i>
+                            <a href="profile.php"><i class="fas fa-cog" style="font-size: 20px"></i></a>
                             </li>
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
@@ -334,11 +334,11 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col">
-                                    <input type="text" class="form-control" name="date" Placeholder="Date" required>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="date" Placeholder="Date" required>
 
-                                </div>
                             </div>
+                        </div>
 
                             <div class="form-row">
                                 <div class="form-group col">
@@ -368,11 +368,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js">
     </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
@@ -390,6 +386,7 @@
                 // do somwthing here
             });
     });
+
     $(document).ready(function() {
         $('#expense-table').DataTable();
 
